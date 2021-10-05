@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:s3="http://www.mulesoft.org/schema/mule/s3" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	<file:config name="File_Config1" doc:name="File Config" doc:id="5612bbe6-ffc2-4ffb-8492-0caa458b9643" >
+		<file:connection />
+	</file:config>
+	<flow name="g13-inventoryFromS3toDB" doc:id="3ff92973-c716-4d6a-bd3a-d8f03ec58d2a" initialState="stopped">
+		<scheduler doc:name="schedulerAt3amDaily" doc:id="c21a01c3-556f-43bd-82e8-9f3626ff7045" >
+			<scheduling-strategy >
+				<cron expression="0 3 * * *"/>
+			</scheduling-strategy>
+		</scheduler>
+				<logger level="INFO" doc:name="Logger" doc:id="c17343b0-6690-4e61-b4f2-f1393e1d7709" message='"Scheduler Started"'/>
+		<s3:get-object doc:name="getAccountsFilefromS3" doc:id="ba3ac4c7-7ea2-4dc8-baea-3b05c9d66f2f" config-ref="Amazon_S3_Configuration" bucketName="g13-accounts" key="accountsnew.dat" />
+				<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="Set Payload" doc:id="4b1d85c6-ee39-45de-8140-27a9cdcd0594" />
+		<ee:transform doc:name="maptoSFfileds" doc:id="48415545-0dd4-4900-af1a-1ba4cc09a853">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	Name: payload01.Name,
+	Phone: payload01.Phone,
+	Type: payload01.Type,
+	BillingStreet: payload01.BillingAddress,
+	ShippingStreet: payload01.ShippingAddress,
+	Email__c: payload01.Email__c
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<salesforce:create type="Account" doc:name="InserttoSF" doc:id="4681d421-5d8a-4202-a3f4-08a64d0cc355" config-ref="Salesforce_Config" />
+			
+		<logger level="INFO" doc:name="Logger" doc:id="377f3379-ddfc-437e-9c0f-61803801737c" message="Data loaded in Salesforce" />
+	
+</flow>
+
+</mule>

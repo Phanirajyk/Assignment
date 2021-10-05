@@ -1,0 +1,10 @@
+[
+	{
+		"PRODUCT_ID":"123",
+		"PRODUCT_NAME":"xyz",
+		"PRODUCT_DESCRIPTION":"abc",
+		"CATEGORY":"uvw",
+		"PRODUCT_AVAIL":"ced",
+		"PRICE":"100"
+	}
+]

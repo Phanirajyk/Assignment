@@ -1,0 +1,10 @@
+form: FLATFILE
+id: 'test'
+name: 'test'
+values: 
+- { name: 'BillingAddress', usage: M, type: String, length: 100 }
+- { name: 'Phone', usage: M, type: String, length: 15 }
+- { name: 'ShippingAddress', usage: M, type: String, length: 100 }
+- { name: 'type', usage: M, type: String, length: 10 }
+- { name: 'AccountNumber', usage: M, type: String, length: 20 }
+- { name: 'Email__c', usage: M, type: String, length: 50 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<salesforce:sfdc-config name="Salesforce_Config1" doc:name="Salesforce Config" doc:id="9e8c9b86-b20a-48c3-81ec-44951f705d94" >
+		<salesforce:basic-connection username="phaniraj.yk@apisero.com" password="Pruthvi@123" securityToken="ZMtr9cSaXafZSRynvVveDxpa" />
+	</salesforce:sfdc-config>
+	<flow name="getorders" doc:id="9a1a23c3-23bb-4eee-98af-960d2a821805" >
+		<http:listener doc:name="getorders" doc:id="338af017-875b-4e78-a8f6-a75ee81e05a9" config-ref="HTTP_Listener_config" path="/getorders" allowedMethods="GET"/>
+		<salesforce:query doc:name="Query" doc:id="2cb622ea-2142-4031-8004-916dd3d1aa8e" config-ref="Salesforce_Config1">
+			<salesforce:salesforce-query><![CDATA[select orderNumber,AccountId,TotalAmount,EffectiveDate,status from order ]]></salesforce:salesforce-query>
+		</salesforce:query>
+		<ee:transform doc:name="Transform Message" doc:id="d971275e-926f-4b62-b363-d5ae741d6271">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="6e16b234-e433-40e5-a253-d47dd328c562" message="#[payload]"/>
+	</flow>
+	<flow name="placeorder" doc:id="59d01560-db63-4e5d-9c1f-878cbaf2b358" >
+	</flow>
+</mule>

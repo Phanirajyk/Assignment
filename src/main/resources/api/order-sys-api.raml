@@ -1,0 +1,97 @@
+#%RAML 1.0
+title: order-sys-api
+
+/orders:
+  post:
+    description: creating an order
+    body:
+      application/json:
+        example: !include Examples/postOrderExample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include Examples/postOrderResponse.raml
+              
+  /{orderId}:
+    patch:
+      description: updated order
+      body:
+        application/json:
+          example: !include Examples/postOrderExample.raml
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include Examples/patchOrderResponse.raml
+                
+    get:
+      description: get order
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include Examples/postOrderResponse.raml
+    /{itemId}:
+      patch:
+        description: updating items
+        body:
+          application/json:
+            example:
+        responses:
+          201:
+            body:
+              application/json:
+                example:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                example:
+                  
+          
+            
+              
+                
+
+/users:
+  post:
+    description: Creates User
+    body:
+      application/json:
+        example: !include Examples/postUserExample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include Examples/postUserResponse.raml
+              
+  /{userId}:
+    patch:
+      description: Updated user
+      body:
+        application/json:
+          example: !include Examples/postUserExample.raml
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include Examples/patchUserResponse.raml
+                
+    delete:
+      description: Delete user 
+      responses:
+        200:
+          body:
+            application/json:
+              example: {
+                "status" : "user deleted successfully"
+              }
+                
+      
+        
+      
+    
+          
+        

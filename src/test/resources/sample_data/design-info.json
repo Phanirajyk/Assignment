@@ -1,0 +1,31 @@
+{
+  "sampleData": {
+    "070d3589-b69a-4b63-b1de-c6f379a6a73b": {
+      "payload": "sample_data/list_java.dwl"
+    },
+    "d24a121d-7361-463f-b325-13ada0474c38": {
+      "payload": "sample_data/list_csv.csv"
+    },
+    "aa60904b-f0e0-4c7c-ac5b-9fb2469a262c": {
+      "payload": "sample_data/defaultstringtype.dwl"
+    },
+    "54f21f97-79f5-475d-a833-633178dbb8ce": {
+      "payload": "sample_data/defaultstringtype_1.dwl"
+    },
+    "9be2c54d-f2b1-44f3-bb86-583f842463c9": {
+      "payload": "sample_data/list_defaultstringtype.dwl"
+    },
+    "157edf88-c594-4217-9114-e14226b90d95": {
+      "payload": "sample_data/list_defaultstringtype_1.dwl"
+    },
+    "e2f1e659-7592-4ab0-97fb-f8989db747e8": {
+      "payload": "sample_data/list_defaultstringtype_2.dwl"
+    },
+    "4b2b51b0-0c7a-4c2f-8e83-522d8e5ad61d": {
+      "payload": "sample_data/list_json.json"
+    },
+    "7927ad96-f1f0-4b90-a9cf-17481965369a": {
+      "payload": "sample_data/list_fixedwidth.flatfile"
+    }
+  }
+}
